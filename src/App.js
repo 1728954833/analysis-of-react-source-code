@@ -1,19 +1,17 @@
 import * as React from "react"
 
-function App() {
-  React.useEffect(() => {
-    console.log("useEffect")
-  }, [])
-  return <div>App works</div>
+function Child(props) {
+  return React.Children.map(props.children, function (item) {
+    return item
+  })
 }
 
-// class App extends React.Component {
-//   componentDidMount() {
-//     console.log("componentDidMount")
-//   }
-//   render() {
-//     return <div>class component</div>
-//   }
-// }
+class App extends React.Component {
+  render() {
+    return <div>
+      1111
+    </div>
+  }
+}
 
 export default App

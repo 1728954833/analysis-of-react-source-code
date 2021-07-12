@@ -11,9 +11,9 @@ import {
   REACT_ELEMENT_TYPE,
   REACT_PORTAL_TYPE,
 } from 'shared/ReactSymbols';
-import {disableMapsAsChildren} from 'shared/ReactFeatureFlags';
+import { disableMapsAsChildren } from 'shared/ReactFeatureFlags';
 
-import {isValidElement, cloneAndReplaceKey} from './ReactElement';
+import { isValidElement, cloneAndReplaceKey } from './ReactElement';
 import ReactDebugCurrentFrame from './ReactDebugCurrentFrame';
 
 const SEPARATOR = '.';
@@ -31,7 +31,7 @@ function escape(key) {
     '=': '=0',
     ':': '=2',
   };
-  const escapedString = ('' + key).replace(escapeRegex, function(match) {
+  const escapedString = ('' + key).replace(escapeRegex, function (match) {
     return escaperLookup[match];
   });
 
@@ -163,7 +163,7 @@ function traverseAllChildrenImpl(
         invariant(
           iteratorFn !== children.entries,
           'Maps are not valid as a React child (found: %s). Consider converting ' +
-            'children to an array of keyed ReactElements instead.',
+          'children to an array of keyed ReactElements instead.',
           children,
         );
       }
@@ -174,8 +174,8 @@ function traverseAllChildrenImpl(
           if (!didWarnAboutMaps) {
             console.warn(
               'Using Maps as children is deprecated and will be removed in ' +
-                'a future major release. Consider converting children to ' +
-                'an array of keyed ReactElements instead.',
+              'a future major release. Consider converting children to ' +
+              'an array of keyed ReactElements instead.',
             );
           }
           didWarnAboutMaps = true;
@@ -265,7 +265,7 @@ function getComponentKey(component, index) {
 }
 
 function forEachSingleChild(bookKeeping, child, name) {
-  const {func, context} = bookKeeping;
+  const { func, context } = bookKeeping;
   func.call(context, child, bookKeeping.count++);
 }
 
@@ -296,7 +296,7 @@ function forEachChildren(children, forEachFunc, forEachContext) {
 }
 
 function mapSingleChildIntoContext(bookKeeping, child, childKey) {
-  const {result, keyPrefix, func, context} = bookKeeping;
+  const { result, keyPrefix, func, context } = bookKeeping;
 
   let mappedChild = func.call(context, child, bookKeeping.count++);
   if (Array.isArray(mappedChild)) {
@@ -308,10 +308,10 @@ function mapSingleChildIntoContext(bookKeeping, child, childKey) {
         // Keep both the (mapped) and old keys if they differ, just as
         // traverseAllChildren used to do for objects as children
         keyPrefix +
-          (mappedChild.key && (!child || child.key !== mappedChild.key)
-            ? escapeUserProvidedKey(mappedChild.key) + '/'
-            : '') +
-          childKey,
+        (mappedChild.key && (!child || child.key !== mappedChild.key)
+          ? escapeUserProvidedKey(mappedChild.key) + '/'
+          : '') +
+        childKey,
       );
     }
     result.push(mappedChild);
@@ -321,6 +321,7 @@ function mapSingleChildIntoContext(bookKeeping, child, childKey) {
 function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
   let escapedPrefix = '';
   if (prefix != null) {
+    // 转译用户的提供的prefix(a/b) => (a//b/)
     escapedPrefix = escapeUserProvidedKey(prefix) + '/';
   }
   const traverseContext = getPooledTraverseContext(
