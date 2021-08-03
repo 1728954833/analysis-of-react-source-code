@@ -24,7 +24,11 @@ class Index extends React.Component {
       {this.status ? <TextComponent /> : <div>三元运算</div>}
       { /* 函数执行 */}
       {this.renderFoot()}
-      <button onClick={() => console.log(this.render())} >打印render后的内容</button>
+      <button onClick={() => {
+        const ele = this.render()
+        ele.props.style.marginTop = '10px'
+        console.log(ele)
+      }} >打印render后的内容</button>
     </div>
   }
 }

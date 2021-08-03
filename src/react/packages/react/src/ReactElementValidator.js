@@ -454,6 +454,7 @@ export function createElementWithValidation(type, props, children) {
     }
   }
 
+  // 传入arguments是因为children可能有多个
   const element = createElement.apply(this, arguments);
 
   // The result can be nullish if a mock or a custom function is used.

@@ -164,6 +164,7 @@ function warnIfStringRefCannotBeAutoConverted(config) {
 
 /**
  * 接收参数 返回 ReactElement
+ * 并且冻结了一些属性比如说props就无法访问了
  */
 const ReactElement = function (type, key, ref, self, source, owner, props) {
   const element = {
@@ -390,7 +391,7 @@ export function jsxDEV(type, config, maybeKey, source, self) {
 /**
  * 创建 React Element
  * type      元素类型
- * config    配置属性
+ * config    配置属性 => 其实就是props
  * children  子元素
  * 1. 分离 props 属性和特殊属性
  * 2. 将子元素挂载到 props.children 中
@@ -437,6 +438,7 @@ export function createElement(type, config, children) {
       key = '' + config.key;
     }
 
+    // 封装对象后的组件本身
     self = config.__self === undefined ? null : config.__self;
     source = config.__source === undefined ? null : config.__source;
     // 遍历 config 对象
@@ -483,6 +485,7 @@ export function createElement(type, config, children) {
       if (Object.freeze) {
         // 调用 freeze 方法 冻结 childArray 数组
         // 防止 React 核心对象被修改 冻结对象提高性能
+        // 冻结后的东西无法修改
         Object.freeze(childArray);
       }
     }
@@ -667,13 +670,7 @@ export function cloneElement(element, config, children) {
   return ReactElement(element.type, key, ref, self, source, owner, props);
 }
 
-/**
- * 验证 object 参数是否是 ReactElement. 返回布尔值
- * 验证成功的条件:
- * object 是对象
- * object 不为 null
- * object 对象中的 $$typeof 属性值为 REACT_ELEMENT_TYPE
- */
+// 检测对象是不是react element元素
 export function isValidElement(object) {
   return (
     typeof object === 'object' &&
