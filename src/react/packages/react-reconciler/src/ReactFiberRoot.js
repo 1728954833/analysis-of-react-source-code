@@ -7,25 +7,25 @@
  * @flow
  */
 
-import type {Fiber} from './ReactFiber';
-import type {ExpirationTime} from './ReactFiberExpirationTime';
-import type {RootTag} from 'shared/ReactRootTags';
-import type {TimeoutHandle, NoTimeout} from './ReactFiberHostConfig';
-import type {Thenable} from './ReactFiberWorkLoop';
-import type {Interaction} from 'scheduler/src/Tracing';
-import type {SuspenseHydrationCallbacks} from './ReactFiberSuspenseComponent';
-import type {ReactPriorityLevel} from './SchedulerWithReactIntegration';
+import type { Fiber } from './ReactFiber';
+import type { ExpirationTime } from './ReactFiberExpirationTime';
+import type { RootTag } from 'shared/ReactRootTags';
+import type { TimeoutHandle, NoTimeout } from './ReactFiberHostConfig';
+import type { Thenable } from './ReactFiberWorkLoop';
+import type { Interaction } from 'scheduler/src/Tracing';
+import type { SuspenseHydrationCallbacks } from './ReactFiberSuspenseComponent';
+import type { ReactPriorityLevel } from './SchedulerWithReactIntegration';
 
-import {noTimeout} from './ReactFiberHostConfig';
-import {createHostRootFiber} from './ReactFiber';
-import {NoWork} from './ReactFiberExpirationTime';
+import { noTimeout } from './ReactFiberHostConfig';
+import { createHostRootFiber } from './ReactFiber';
+import { NoWork } from './ReactFiberExpirationTime';
 import {
   enableSchedulerTracing,
   enableSuspenseCallback,
 } from 'shared/ReactFeatureFlags';
-import {unstable_getThreadID} from 'scheduler/tracing';
-import {NoPriority} from './SchedulerWithReactIntegration';
-import {initializeUpdateQueue} from './ReactUpdateQueue';
+import { unstable_getThreadID } from 'scheduler/tracing';
+import { NoPriority } from './SchedulerWithReactIntegration';
+import { initializeUpdateQueue } from './ReactUpdateQueue';
 
 export type PendingInteractionMap = Map<ExpirationTime, Set<Interaction>>;
 
@@ -33,47 +33,47 @@ type BaseFiberRootProperties = {|
   // The type of root (legacy, batched, concurrent, etc.)
   tag: RootTag,
 
-  // Any additional information from the host associated with this root.
-  containerInfo: any,
-  // Used only by persistent updates.
-  pendingChildren: any,
-  // The currently active root fiber. This is the mutable root of the tree.
-  current: Fiber,
+    // Any additional information from the host associated with this root.
+    containerInfo: any,
+      // Used only by persistent updates.
+      pendingChildren: any,
+        // The currently active root fiber. This is the mutable root of the tree.
+        current: Fiber,
 
-  pingCache:
-    | WeakMap<Thenable, Set<ExpirationTime>>
-    | Map<Thenable, Set<ExpirationTime>>
+          pingCache:
+    | WeakMap < Thenable, Set < ExpirationTime >>
+    | Map < Thenable, Set < ExpirationTime >>
     | null,
 
   finishedExpirationTime: ExpirationTime,
-  // A finished work-in-progress HostRoot that's ready to be committed.
-  finishedWork: Fiber | null,
-  // Timeout handle returned by setTimeout. Used to cancel a pending timeout, if
-  // it's superseded by a new one.
-  timeoutHandle: TimeoutHandle | NoTimeout,
-  // Top context object, used by renderSubtreeIntoContainer
-  context: Object | null,
-  pendingContext: Object | null,
-  // Determines if we should attempt to hydrate on the initial mount
-  +hydrate: boolean,
-  // Node returned by Scheduler.scheduleCallback
-  callbackNode: *,
-  // Expiration of the callback associated with this root
-  callbackExpirationTime: ExpirationTime,
-  // Priority of the callback associated with this root
-  callbackPriority: ReactPriorityLevel,
-  // The earliest pending expiration time that exists in the tree
-  firstPendingTime: ExpirationTime,
-  // The earliest suspended expiration time that exists in the tree
-  firstSuspendedTime: ExpirationTime,
-  // The latest suspended expiration time that exists in the tree
-  lastSuspendedTime: ExpirationTime,
-  // The next known expiration time after the suspended range
-  nextKnownPendingLevel: ExpirationTime,
-  // The latest time at which a suspended component pinged the root to
-  // render again
-  lastPingedTime: ExpirationTime,
-  lastExpiredTime: ExpirationTime,
+    // A finished work-in-progress HostRoot that's ready to be committed.
+    finishedWork: Fiber | null,
+      // Timeout handle returned by setTimeout. Used to cancel a pending timeout, if
+      // it's superseded by a new one.
+      timeoutHandle: TimeoutHandle | NoTimeout,
+        // Top context object, used by renderSubtreeIntoContainer
+        context: Object | null,
+          pendingContext: Object | null,
+            // Determines if we should attempt to hydrate on the initial mount
+            +hydrate: boolean,
+              // Node returned by Scheduler.scheduleCallback
+              callbackNode: *,
+                // Expiration of the callback associated with this root
+                callbackExpirationTime: ExpirationTime,
+                  // Priority of the callback associated with this root
+                  callbackPriority: ReactPriorityLevel,
+                    // The earliest pending expiration time that exists in the tree
+                    firstPendingTime: ExpirationTime,
+                      // The earliest suspended expiration time that exists in the tree
+                      firstSuspendedTime: ExpirationTime,
+                        // The latest suspended expiration time that exists in the tree
+                        lastSuspendedTime: ExpirationTime,
+                          // The next known expiration time after the suspended range
+                          nextKnownPendingLevel: ExpirationTime,
+                            // The latest time at which a suspended component pinged the root to
+                            // render again
+                            lastPingedTime: ExpirationTime,
+                              lastExpiredTime: ExpirationTime,
 |};
 
 // The following attributes are only used by interaction tracing builds.
@@ -82,8 +82,8 @@ type BaseFiberRootProperties = {|
 // Note that these attributes are only defined when the enableSchedulerTracing flag is enabled.
 type ProfilingOnlyFiberRootProperties = {|
   interactionThreadID: number,
-  memoizedInteractions: Set<Interaction>,
-  pendingInteractionMap: PendingInteractionMap,
+    memoizedInteractions: Set < Interaction >,
+      pendingInteractionMap: PendingInteractionMap,
 |};
 
 // The follow fields are only used by enableSuspenseCallback for hydration.
@@ -148,6 +148,7 @@ export function createFiberRoot(
   }
 
   // 创建根节点对应的 rootFiber
+  console.log(tag)
   const uninitializedFiber = createHostRootFiber(tag);
   // 为 fiberRoot 添加 current 属性 值为 rootFiber
   root.current = uninitializedFiber;
@@ -158,6 +159,7 @@ export function createFiberRoot(
   // updateQueue 用于存放 Update 对象
   // Update 对象用于记录组件状态的改变
   initializeUpdateQueue(uninitializedFiber);
+  console.log(root)
   // 返回 root
   return root;
 }

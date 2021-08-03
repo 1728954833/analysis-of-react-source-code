@@ -278,7 +278,7 @@ function legacyRenderSubtreeIntoContainer(
     // 初始化渲染不执行批量更新
     // 因为批量更新是异步的是可以被打断的, 但是初始化渲染应该尽快完成不能被打断
     // 所以不执行批量更新
-    console.log(children, fiberRoot, parentComponent, callback)
+    // console.log(children, fiberRoot, parentComponent, callback)
     unbatchedUpdates(() => {
       updateContainer(children, fiberRoot, parentComponent, callback);
     });

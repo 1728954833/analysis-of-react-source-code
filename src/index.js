@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
-import App from "./App"
+import Index from "./App"
 
-ReactDOM.render(<App />, document.getElementById("root"), function () {
-  console.log("callback")
+ReactDOM.render(<Index />, document.getElementById("root"), function () {
+  // console.log("callback")
 })
