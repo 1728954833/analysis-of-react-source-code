@@ -61,12 +61,34 @@ module.exports = function (webpackEnv) {
   const isEnvProductionProfile =
     isEnvProduction && process.argv.includes("--profile")
 
-  // We will provide `paths.publicUrlOrPath` to our app
-  // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-  // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-  // Get environment variables to inject into our app.
+  // 我们将为我们的应用程序提供`paths.publicUrlOrPath`
+  // 作为 `index.html` 中的 %PUBLIC_URL% 和 JavaScript 中的 `process.env.PUBLIC_URL`。
+  // 省略尾部斜杠，因为 %PUBLIC_URL%/xyz 看起来比 %PUBLIC_URL%xyz 更好。
+  // 获取环境变量以注入到我们的应用程序中。
+  // 目前环境变量
+  /**
+    {
+      'process.env': {
+          NODE_ENV: '"development"',
+          PUBLIC_URL: '""',
+          WDS_SOCKET_HOST: undefined,
+          WDS_SOCKET_PATH: undefined,
+          WDS_SOCKET_PORT: undefined
+      },
+      __DEV__: true,
+      SharedArrayBuffer: true,
+      spyOnDev: true,
+      spyOnDevAndProd: true,
+      spyOnProd: true,
+      __PROFILE__: true,
+      __UMD__: true,
+      __EXPERIMENTAL__: true,
+      __VARIANT__: true,
+      gate: true,
+      trustedTypes: true
+    }
+  */
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1))
-
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
@@ -551,11 +573,11 @@ module.exports = function (webpackEnv) {
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
-      // Makes some environment variables available to the JS code, for example:
-      // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
-      // It is absolutely essential that NODE_ENV is set to production
-      // during a production build.
-      // Otherwise React will be compiled in the very slow development mode.
+      // 使一些环境变量可用于 JS 代码，例如：
+      // if (process.env.NODE_ENV === 'production') { ... }. 参见`./env.js`。
+      // 在生产构建期间。 将 NODE_ENV 设置为 production 是绝对必要的
+      // 否则 React 将在非常慢的开发模式下编译。
+      // DefinePlugin 允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和发布模式的构建允许不同的行为非常有用。如果在开发构建中，而不在发布构建中执行日志记录，则可以使用全局常量来决定是否记录日志。这就是 DefinePlugin 的用处，设置它，就可以忘记开发和发布构建的规则。
       new webpack.DefinePlugin(env.stringified),
       // This is necessary to emit hot updates (currently CSS only):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),

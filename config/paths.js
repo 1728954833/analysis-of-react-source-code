@@ -1,5 +1,24 @@
 'use strict';
-
+// 文件返回一系列东西的绝对路径
+/*
+{
+  dotenv: '/Users/liu/mydir/analysis-of-react-source-code/.env',
+  appPath: '/Users/liu/mydir/analysis-of-react-source-code',
+  appBuild: '/Users/liu/mydir/analysis-of-react-source-code/build',
+  appPublic: '/Users/liu/mydir/analysis-of-react-source-code/public',
+  appHtml: '/Users/liu/mydir/analysis-of-react-source-code/public/index.html',
+  appIndexJs: '/Users/liu/mydir/analysis-of-react-source-code/src/index.js',
+  appPackageJson: '/Users/liu/mydir/analysis-of-react-source-code/package.json',
+  appSrc: '/Users/liu/mydir/analysis-of-react-source-code/src',
+  appTsConfig: '/Users/liu/mydir/analysis-of-react-source-code/tsconfig.json',
+  appJsConfig: '/Users/liu/mydir/analysis-of-react-source-code/jsconfig.json',
+  yarnLockFile: '/Users/liu/mydir/analysis-of-react-source-code/yarn.lock',
+  testsSetup: '/Users/liu/mydir/analysis-of-react-source-code/src/setupTests.js',
+  proxySetup: '/Users/liu/mydir/analysis-of-react-source-code/src/setupProxy.js',
+  appNodeModules: '/Users/liu/mydir/analysis-of-react-source-code/node_modules',
+  publicUrlOrPath: '/'
+}
+*/
 const path = require('path');
 const fs = require('fs');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
@@ -20,6 +39,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
   require(resolveApp('package.json')).homepage,
   process.env.PUBLIC_URL
 );
+
 
 const moduleFileExtensions = [
   'web.mjs',

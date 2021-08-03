@@ -21,7 +21,7 @@ import {
   REACT_FRAGMENT_TYPE,
   REACT_ELEMENT_TYPE,
 } from 'shared/ReactSymbols';
-import {warnAboutSpreadingKeyToJSX} from 'shared/ReactFeatureFlags';
+import { warnAboutSpreadingKeyToJSX } from 'shared/ReactFeatureFlags';
 import checkPropTypes from 'prop-types/checkPropTypes';
 
 import ReactCurrentOwner from './ReactCurrentOwner';
@@ -133,7 +133,7 @@ function validateExplicitKey(element, parentType) {
   if (__DEV__) {
     console.error(
       'Each child in a list should have a unique "key" prop.' +
-        '%s%s See https://fb.me/react-warning-keys for more information.',
+      '%s%s See https://fb.me/react-warning-keys for more information.',
       currentComponentErrorInfo,
       childOwner,
     );
@@ -234,7 +234,7 @@ function validatePropTypes(element) {
     ) {
       console.error(
         'getDefaultProps is only used on classic React.createClass ' +
-          'definitions. Use a static property named `defaultProps` instead.',
+        'definitions. Use a static property named `defaultProps` instead.',
       );
     }
   }
@@ -254,7 +254,7 @@ function validateFragmentProps(fragment) {
       if (key !== 'children' && key !== 'key') {
         console.error(
           'Invalid prop `%s` supplied to `React.Fragment`. ' +
-            'React.Fragment can only have `key` and `children` props.',
+          'React.Fragment can only have `key` and `children` props.',
           key,
         );
         break;
@@ -293,7 +293,7 @@ export function jsxWithValidation(
         ' You likely forgot to export your component from the file ' +
         "it's defined in, or you might have mixed up default and named imports.";
     }
-
+    
     const sourceInfo = getSourceInfoErrorAddendum(source);
     if (sourceInfo) {
       info += sourceInfo;
@@ -317,8 +317,8 @@ export function jsxWithValidation(
     if (__DEV__) {
       console.error(
         'React.jsx: type is invalid -- expected a string (for ' +
-          'built-in components) or a class/function (for composite ' +
-          'components) but got: %s.%s',
+        'built-in components) or a class/function (for composite ' +
+        'components) but got: %s.%s',
         typeString,
         info,
       );
@@ -355,8 +355,8 @@ export function jsxWithValidation(
           if (__DEV__) {
             console.error(
               'React.jsx: Static children should always be an array. ' +
-                'You are likely explicitly calling React.jsxs or React.jsxDEV. ' +
-                'Use the Babel transform instead.',
+              'You are likely explicitly calling React.jsxs or React.jsxDEV. ' +
+              'Use the Babel transform instead.',
             );
           }
         }
@@ -371,8 +371,8 @@ export function jsxWithValidation(
       if (hasOwnProperty.call(props, 'key')) {
         console.error(
           'React.jsx: Spreading a key to JSX is a deprecated pattern. ' +
-            'Explicitly pass a key after spreading props in your JSX call. ' +
-            'E.g. <%s {...props} key={key} />',
+          'Explicitly pass a key after spreading props in your JSX call. ' +
+          'E.g. <%s {...props} key={key} />',
           getComponentName(type) || 'ComponentName',
         );
       }
@@ -400,11 +400,14 @@ export function jsxWithValidationDynamic(type, props, key) {
   return jsxWithValidation(type, props, key, false);
 }
 
+// type: 当前传入组建的类型: element tag or class or function 
+// props: 组件类型 props中的source包括了代码行数和所在文件的信息
+// children: 子组件 
 export function createElementWithValidation(type, props, children) {
   const validType = isValidElementType(type);
 
-  // We warn in this case but don't throw. We expect the element creation to
-  // succeed and there will likely be errors in render.
+  // console.log(ReactCurrentOwner.current)
+  // 在这种情况下我们警告但不抛出。 我们期望元素创建成功，渲染中可能会出现错误。
   if (!validType) {
     let info = '';
     if (
@@ -418,6 +421,7 @@ export function createElementWithValidation(type, props, children) {
         "it's defined in, or you might have mixed up default and named imports.";
     }
 
+    // 这行代码用于定位错误代码在哪
     const sourceInfo = getSourceInfoErrorAddendumForProps(props);
     if (sourceInfo) {
       info += sourceInfo;
@@ -439,10 +443,11 @@ export function createElementWithValidation(type, props, children) {
     }
 
     if (__DEV__) {
+      // 最终输出错误如果是DEV环境
       console.error(
         'React.createElement: type is invalid -- expected a string (for ' +
-          'built-in components) or a class/function (for composite ' +
-          'components) but got: %s.%s',
+        'built-in components) or a class/function (for composite ' +
+        'components) but got: %s.%s',
         typeString,
         info,
       );
@@ -487,17 +492,17 @@ export function createFactoryWithValidation(type) {
       didWarnAboutDeprecatedCreateFactory = true;
       console.warn(
         'React.createFactory() is deprecated and will be removed in ' +
-          'a future major release. Consider using JSX ' +
-          'or use React.createElement() directly instead.',
+        'a future major release. Consider using JSX ' +
+        'or use React.createElement() directly instead.',
       );
     }
     // Legacy hook: remove it
     Object.defineProperty(validatedFactory, 'type', {
       enumerable: false,
-      get: function() {
+      get: function () {
         console.warn(
           'Factory.type is deprecated. Access the class directly ' +
-            'before passing it to createFactory.',
+          'before passing it to createFactory.',
         );
         Object.defineProperty(this, 'type', {
           value: type,

@@ -7,8 +7,8 @@
  * @flow
  */
 
-// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
-// nor polyfill, then a plain number is used for performance.
+// 用于标记类似 ReactElement 的类型的 Symbol。 
+// 如果没有原生 Symbol 也不是 polyfill，则使用普通数字来提高性能。
 const hasSymbol = typeof Symbol === 'function' && Symbol.for;
 
 export const REACT_ELEMENT_TYPE = hasSymbol

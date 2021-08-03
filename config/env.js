@@ -1,4 +1,4 @@
-"use strict"
+
 
 const fs = require("fs")
 const path = require("path")
@@ -56,8 +56,8 @@ process.env.NODE_PATH = (process.env.NODE_PATH || "")
   .map(folder => path.resolve(appDirectory, folder))
   .join(path.delimiter)
 
-// Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
-// injected into the application via DefinePlugin in webpack configuration.
+// 获取 NODE_ENV 和 REACT_APP_* 环境变量并将它们准备好
+// 通过 webpack 配置中的 DefinePlugin 注入到应用程序中。
 const REACT_APP = /^REACT_APP_/i
 
 function getClientEnvironment(publicUrl) {
@@ -69,19 +69,19 @@ function getClientEnvironment(publicUrl) {
         return env
       },
       {
-        // Useful for determining whether we’re running in production mode.
-        // Most importantly, it switches React into the correct mode.
+        // 用于确定我们是否在生产模式下运行。
+        // 最重要的是，它将 React 切换到正确的模式。
         NODE_ENV: process.env.NODE_ENV || "development",
-        // Useful for resolving the correct path to static assets in `public`.
-        // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
-        // This should only be used as an escape hatch. Normally you would put
-        // images into the `src` and `import` them in code to get their paths.
+        // 用于解析`public`中静态资产的正确路径。
+        // 例如 <img src={process.env.PUBLIC_URL + '/img/logo.png'} />。
+        // 这应该只用作逃生舱口。 通常你会放
+        // 图像到 `src` 和 `import` 代码中以获取它们的路径。
         PUBLIC_URL: publicUrl,
-        // We support configuring the sockjs pathname during development.
-        // These settings let a developer run multiple simultaneous projects.
-        // They are used as the connection `hostname`, `pathname` and `port`
-        // in webpackHotDevClient. They are used as the `sockHost`, `sockPath`
-        // and `sockPort` options in webpack-dev-server.
+        // 我们支持在开发过程中配置 sockjs 路径名。
+        // 这些设置让开发人员可以同时运行多个项目。
+        // 它们用作连接`hostname`、`pathname` 和`port`
+        // 在 webpackHotDevClient. 它们被用作`sockHost`、`sockPath`
+        // 和 webpack-dev-server 中的 `sockPort` 选项。
         WDS_SOCKET_HOST: process.env.WDS_SOCKET_HOST,
         WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
         WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT
