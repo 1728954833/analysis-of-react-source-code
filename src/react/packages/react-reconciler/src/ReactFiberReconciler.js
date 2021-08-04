@@ -243,10 +243,12 @@ export function updateContainer(
   // ReactElement 渲染完成执行的回调函数
   callback: ?Function,
 ): ExpirationTime {
+  console.log('FiberRoot', container)
   if (__DEV__) {
     onScheduleRoot(container, element);
   }
   // container 获取 rootFiber
+  // current指向的是当前页面已经渲染的fiber
   const current = container.current;
   // 获取当前距离 react 应用初始化的时间 1073741805
   const currentTime = requestCurrentTimeForUpdate();

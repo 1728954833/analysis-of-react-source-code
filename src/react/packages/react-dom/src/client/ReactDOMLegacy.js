@@ -219,7 +219,9 @@ function warnOnInvalidCallback(callback: mixed, callerName: string): void {
  **/
 function legacyRenderSubtreeIntoContainer(
   parentComponent: ?React$Component<any, any>,
+  // reactDom.render的第一个参数
   children: ReactNodeList,
+  // reactDom.render的第二个参数
   container: Container,
   forceHydrate: boolean,
   callback: ?Function,
@@ -241,15 +243,7 @@ function legacyRenderSubtreeIntoContainer(
   // 即将存储根 Fiber 对象
   let fiberRoot;
   if (!root) {
-    // 初始渲染
-    // 初始化根 Fiber 数据结构
-    // 为 container 容器添加 _reactRootContainer 属性
-    // 在 _reactRootContainer 对象中有一个属性叫做 _internalRoot
-    // _internalRoot 属性值即为 FiberRoot 表示根节点 Fiber 数据结构
-    // legacyCreateRootFromDOMContainer
-    // createLegacyRoot
-    // new ReactDOMBlockingRoot -> this._internalRoot
-    // createRootImpl
+    // 其中fiberRoot是整个应用的根节点，rootFiber是<App/>所在组件树的根节点。
     root = container._reactRootContainer = legacyCreateRootFromDOMContainer(
       container,
       forceHydrate,

@@ -42,9 +42,14 @@ export const Batched = Sync - 1;
 const UNIT_SIZE = 10;
 const MAGIC_NUMBER_OFFSET = Batched - 1;
 
-// 1 unit of expiration time represents 10ms.
+//1个过期时间单位代表10ms
 export function msToExpirationTime(ms: number): ExpirationTime {
-  // Always subtract from the offset so that we don't clash with the magic number for NoWork.
+  // 总是从偏移量中减去，这样我们就不会与 NoWork 的幻数发生冲突。
+  // | 0 为取整数 
+  // (100 / 10) | 0 = 10;
+  // (105 / 10) | 0 = 10;
+  // (110 / 10) | 0 = 11;
+  // 可以看出这段代码让100 - 110(前闭后开)之间的数格式化成了1个数， 抹平了10ms与最大整数的一个差值，越在后面的执行，时间戳的值会越大
   return MAGIC_NUMBER_OFFSET - ((ms / UNIT_SIZE) | 0);
 }
 

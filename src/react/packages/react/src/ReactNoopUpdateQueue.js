@@ -19,9 +19,9 @@ function warnNoop(publicInstance, callerName) {
     }
     console.error(
       "Can't call %s on a component that is not yet mounted. " +
-        'This is a no-op, but it might indicate a bug in your application. ' +
-        'Instead, assign to `this.state` directly or define a `state = {};` ' +
-        'class property with the desired state in the %s component.',
+      'This is a no-op, but it might indicate a bug in your application. ' +
+      'Instead, assign to `this.state` directly or define a `state = {};` ' +
+      'class property with the desired state in the %s component.',
       callerName,
       componentName,
     );
@@ -30,7 +30,8 @@ function warnNoop(publicInstance, callerName) {
 }
 
 /**
- * This is the abstract API for an update queue.
+ * 这是更新队列的抽象 API。
+ * 会在创建类组件的时候初始化
  */
 const ReactNoopUpdateQueue = {
   /**
@@ -40,26 +41,26 @@ const ReactNoopUpdateQueue = {
    * @protected
    * @final
    */
-  isMounted: function(publicInstance) {
+  isMounted: function (publicInstance) {
     return false;
   },
 
   /**
-   * Forces an update. This should only be invoked when it is known with
-   * certainty that we are **not** in a DOM transaction.
-   *
-   * You may want to call this when you know that some deeper aspect of the
-   * component's state has changed but `setState` was not called.
-   *
-   * This will not invoke `shouldComponentUpdate`, but it will invoke
-   * `componentWillUpdate` and `componentDidUpdate`.
-   *
-   * @param {ReactClass} publicInstance The instance that should rerender.
-   * @param {?function} callback Called after component is updated.
-   * @param {?string} callerName name of the calling function in the public API.
-   * @internal
-   */
-  enqueueForceUpdate: function(publicInstance, callback, callerName) {
+  * 强制更新。 这应该只在已知时调用
+  * 确定我们 ** 不在 DOM 事务中。
+  *
+  * 当你知道一些更深的方面时，你可能想调用它
+  * 组件的状态已更改，但未调用 `setState`。
+  *
+  * 这不会调用 `shouldComponentUpdate`，但会调用
+  * `componentWillUpdate` 和 `componentDidUpdate`。
+  *
+  * @param {ReactClass} publicInstance 应该重新渲染的实例。
+  * @param {?function} 回调在组件更新后调用。
+  * @param {?string} callerName 公共 API 中调用函数的名称。
+  * @internal
+  */
+  enqueueForceUpdate: function (publicInstance, callback, callerName) {
     warnNoop(publicInstance, 'forceUpdate');
   },
 
@@ -76,7 +77,7 @@ const ReactNoopUpdateQueue = {
    * @param {?string} callerName name of the calling function in the public API.
    * @internal
    */
-  enqueueReplaceState: function(
+  enqueueReplaceState: function (
     publicInstance,
     completeState,
     callback,
@@ -97,7 +98,7 @@ const ReactNoopUpdateQueue = {
    * @param {?string} Name of the calling function in the public API.
    * @internal
    */
-  enqueueSetState: function(
+  enqueueSetState: function (
     publicInstance,
     partialState,
     callback,

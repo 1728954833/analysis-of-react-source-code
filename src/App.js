@@ -3,11 +3,26 @@ import * as React from 'react'
 const TextComponent = () => <div> hello , i am function component </div>
 const toLearn = ['react', 'vue', 'webpack', 'nodejs']
 class Index extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      name: 'before'
+    }
+  }
+
+  handleState = () => {
+    this.state.name = 'after'
+    this.forceUpdate(() => {
+      console.log("强制刷新")
+    })
+  }
+
   status = false /* 状态 */
   renderFoot = () => <div> i am foot</div>
   render() {
     /* 以下都是常用的jsx元素节 */
     return <div style={{ marginTop: '100px' }}   >
+      <span onClick={this.handleState}>{this.state.name}</span>
       { /* element 元素类型 */}
       <div>hello,world</div>
       { /* fragment 类型 */}

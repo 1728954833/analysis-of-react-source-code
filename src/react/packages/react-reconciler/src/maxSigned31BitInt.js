@@ -7,7 +7,7 @@
  * @flow
  */
 
-// Max 31 bit integer. The max integer size in V8 for 32-bit systems.
-// Math.pow(2, 30) - 1
-// 0b111111111111111111111111111111
+//最大 31 位整数。 V8 中 32 位系统的最大整数大小。
+//Math.pow(2, 30) -1
+//0b1111111111111111111111111111111 
 export default 1073741823;

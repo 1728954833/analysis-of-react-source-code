@@ -148,7 +148,6 @@ export function createFiberRoot(
   }
 
   // 创建根节点对应的 rootFiber
-  console.log(tag)
   const uninitializedFiber = createHostRootFiber(tag);
   // 为 fiberRoot 添加 current 属性 值为 rootFiber
   root.current = uninitializedFiber;
@@ -159,7 +158,6 @@ export function createFiberRoot(
   // updateQueue 用于存放 Update 对象
   // Update 对象用于记录组件状态的改变
   initializeUpdateQueue(uninitializedFiber);
-  console.log(root)
   // 返回 root
   return root;
 }
