@@ -12,6 +12,7 @@ class Index extends React.Component {
       <div>hello,world</div>
       { /* fragment 类型 */}
       <React.Fragment>
+        { /*  eslint-disable-next-line jsx-a11y/accessible-emoji */}
         <div> 👽👽 </div>
       </React.Fragment>
       { /* text 文本类型 */}
